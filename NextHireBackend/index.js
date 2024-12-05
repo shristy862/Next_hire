@@ -1,14 +1,15 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import bodyParser from 'body-parser';
-import authRoutes from './Routes/authRoutes.js';
+import connectDB from './utils/db.js';
+import authRoutes from './userData/Routes/authRoutes.js';
 
 dotenv.config();
+connectDB();
 
 const app = express();
 const port = 3000;
 
-// Middleware
 app.use(bodyParser.json());
 
 // Routes
