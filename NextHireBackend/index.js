@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import connectDB from './utils/db.js';
 import authRoutes from './userData/Routes/authRoutes.js';
+import forgotPasswordRoutes from './userData/Routes/forgotPasswordRoutes.js'; 
 
 dotenv.config();
 connectDB();
@@ -12,8 +13,11 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
-// Routes
+// Routes for signup users
 app.use('/auth', authRoutes);
+
+// Forgot password routes
+app.use('/password', forgotPasswordRoutes); // Use the routes, not the controller
 
 // Base route
 app.get('/', (req, res) => {
