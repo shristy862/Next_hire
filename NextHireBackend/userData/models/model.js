@@ -1,11 +1,26 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
-  phoneNumber: { type: String, required: true, unique: true },
-  rawPassword: { type: String, required: true }, // Save raw password
-  hashedPassword: { type: String, required: true }, // Save hashed password
-}, { timestamps: true });
+const UserSchema = new mongoose.Schema({
+  phoneNumber: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  rawPassword: {
+    type: String,
+    required: true,
+  },
+  hashedPassword: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    required: true,
+    enum: ['admin', 'employee', 'jobseeker'], 
+  },
+});
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', UserSchema);
 
 export default User;

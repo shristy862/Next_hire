@@ -1,5 +1,5 @@
 import express from 'express';
-import { sendForgotPasswordOTP, resetPassword } from '../controller/forgotPassword.js';
+import { sendForgotPasswordOTP, resetPassword } from '../controllers/forgotPassword.js';
 
 const router = express.Router();
 
