@@ -3,11 +3,11 @@ import User from '../models/model.js';
 import bcrypt from 'bcrypt';
 
 export const verify = async (req, res) => {
-  const { phoneNumber, otp, password } = req.body;
+  const { phoneNumber, otp } = req.body;
 
   // Validate required fields
-  if (!phoneNumber || !otp || !password) {
-    return res.status(400).json({ message: 'All fields are required.' });
+  if (!phoneNumber || !otp) {
+    return res.status(400).json({ message: 'Phone number and OTP are required.' });
   }
 
   try {
@@ -17,6 +17,16 @@ export const verify = async (req, res) => {
       return res.status(400).json({ message: 'Temporary user not found. Please sign up first.' });
     }
 
+    // Check if OTP is expired (5 minutes)
+    const currentTime = Date.now();
+    const otpExpirationTime = 5 * 60 * 1000; // 5 minutes in milliseconds
+    if (currentTime - tempUser.createdAt > otpExpirationTime) {
+      return res.status(400).json({
+        message: 'OTP has expired. Please request a new OTP.',
+      });
+    }
+
+    // Check if OTP matches
     if (tempUser.otp !== String(otp)) {
       return res.status(400).json({ message: 'Invalid OTP. Please try again.' });
     }
@@ -26,19 +36,16 @@ export const verify = async (req, res) => {
       return res.status(400).json({ message: 'Role is missing in temporary user data.' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create new user using tempUser.role
+    // Create new user
     const newUser = new User({
       phoneNumber,
-      rawPassword: password,
-      hashedPassword,
-      role: tempUser.role, // Use role from tempUser
+      hashedPassword: tempUser.hashedPassword,
+      role: tempUser.role,
     });
 
     await newUser.save();
 
-    // Delete tempUser data
+    // Delete temporary user data
     await TemporaryUser.deleteOne({ phoneNumber });
 
     res.status(200).json({ message: 'User verified and registered successfully!' });
@@ -46,14 +53,9 @@ export const verify = async (req, res) => {
     console.error('Error:', error);
 
     // Send back the actual error in the response
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ message: 'Validation Error', error: error.message });
-    }
-
     res.status(500).json({
       message: 'An error occurred during verification.',
       error: error.message || 'Unknown error',
     });
   }
 };
-

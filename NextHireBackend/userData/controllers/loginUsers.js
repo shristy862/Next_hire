@@ -31,18 +31,23 @@ export const login = async (req, res) => {
     }
 
     const token = jwt.sign(
-        { phoneNumber: user.phoneNumber, role: user.role },
-        JWT_SECRET_KEY,
-        { expiresIn: '1h' } // Token expires in 1 hour
-      );
-
+      {
+        phoneNumber: user.phoneNumber,
+        role: user.role,
+        source: 'login', 
+        userId: user._id, 
+      },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: '1h' }
+    );
+    
     // Send response with user role and welcome message
     res.status(200).json({
       message: `Welcome, ${user.role}!`,
-      role: user.role,
-      phoneNumber: user.phoneNumber,
+      userId: user._id,  
       token: token, 
     });
+
   } catch (error) {
     console.error('Error:', error);
 
