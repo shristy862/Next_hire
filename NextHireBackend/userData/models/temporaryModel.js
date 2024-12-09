@@ -8,10 +8,7 @@ const tempUserSchema = new mongoose.Schema({
     required: true,
     enum: ['admin', 'employee', 'jobseeker'],
   },
-  rawPassword: {
-    type: String,
-    required: true
-  },
+  rawPassword: { type: String },
   hashedPassword: {
     type: String,
     required: true

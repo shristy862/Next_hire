@@ -35,23 +35,30 @@ export const signup = async (req, res) => {
   const otp = generateOTP();
 
   try {
-    // Hash the password
+    // Hash the password for storage
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Send OTP using AWS SNS
     const params = {
-      Message: `Your OTP code is: ${otp}`,
+      Message: `${otp} is your one time password (OTP) , It is valid for next 5 minutes , Do not share this with anyother ,  regard Team NextHireLtd `,
       PhoneNumber: phoneNumber,
     };
 
     await sns.publish(params).promise();
 
     // Save data to TemporaryUser collection
-    await TemporaryUser.findOneAndUpdate(
-      { phoneNumber },
-      { otp, role, rawPassword: password, hashedPassword },
-      { upsert: true, new: true }
-    );
+    const newUser = new TemporaryUser({
+      phoneNumber,
+      otp,
+      role,
+      rawPassword: password,  // Save the raw password here
+      hashedPassword,         // Save the hashed password here
+    });
+
+     // Save the new user instance
+     const savedUser = await newUser.save();
+
+     console.log('Saved User:', savedUser);  
 
     console.log('OTP sent successfully');
     res.status(200).json({ message: 'OTP sent successfully!' });
