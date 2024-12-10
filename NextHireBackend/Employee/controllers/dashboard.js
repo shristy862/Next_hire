@@ -1,12 +1,12 @@
 export const employeeDashboard = async (req, res) => {
     try {
-      const { phoneNumber, role } = req.user;
+      const { phoneNumber, role, userId } = req.user;
   
       res.status(200).json({
         message: `Welcome, Employee!`,
         dashboardInfo: {
           phoneNumber,
-          role,
+          userId,
           features: [
             "View assigned tasks",
             "Access team updates",

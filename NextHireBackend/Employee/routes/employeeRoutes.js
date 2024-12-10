@@ -5,11 +5,7 @@ import { checkRole } from '../../middlewares/checkRoles.js';
 
 const router = express.Router();
 
-router.get(
-  '/dashboard',
-  verifyToken,
-  checkRole(['employee']),
-  employeeDashboard
-);
+// Employee-specific route
+router.get('/auth/employee/dashboard', verifyToken, checkRole(['employee']), employeeDashboard);
 
 export default router;

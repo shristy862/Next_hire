@@ -15,7 +15,7 @@ const tempUserSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now, // Automatically set the OTP generation time
+    default: Date.now, 
   },
 });
 

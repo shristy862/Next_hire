@@ -36,10 +36,11 @@ export const verify = async (req, res) => {
       return res.status(400).json({ message: 'Role is missing in temporary user data.' });
     }
 
-    // Create new user
+    // Create new user with both rawPassword and hashedPassword
     const newUser = new User({
       phoneNumber,
-      hashedPassword: tempUser.hashedPassword,
+      rawPassword: tempUser.rawPassword, // Save the raw password (not recommended)
+      hashedPassword: tempUser.hashedPassword, // Save the hashed password
       role: tempUser.role,
     });
 

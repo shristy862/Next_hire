@@ -1,4 +1,4 @@
-import sns from '../../config/aws.js';
+import sns from '../../config/awsSNS.js';
 import TemporaryUser from '../models/temporaryModel.js';
 import generateOTP from '../../utils/otpGenerator.js';
 import User from '../models/model.js';

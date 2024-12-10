@@ -38,7 +38,7 @@ export const login = async (req, res) => {
         userId: user._id, 
       },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: '1h' }
+      { expiresIn: '24h' }
     );
     
     // Send response with user role and welcome message
