@@ -1,8 +1,9 @@
-import sns from '../../config/aws.js';
+import sns from '../../config/awsSNS.js';
 import generateOTP from '../../utils/otpGenerator.js';
 import TemporaryUser from '../models/temporaryModel.js';
 import User from '../models/model.js'; 
 import bcrypt from 'bcrypt';
+
 // Send OTP for password reset
 export const sendForgotPasswordOTP = async (req, res) => {
   const { phoneNumber } = req.body;
