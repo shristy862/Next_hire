@@ -40,7 +40,8 @@ export const signup = async (req, res) => {
 
     // Send OTP using AWS SNS
     const params = {
-      Message: `${otp} is your one time password (OTP) , It is valid for next 5 minutes , Do not share this with anyother ,  regard Team NextHireLtd `,
+      Message: `${otp} is your one time password (OTP). It is valid for next 5 minutes, Do not share this with another person.
+      regard Team NextHireLtd `,
       PhoneNumber: phoneNumber,
     };
 
