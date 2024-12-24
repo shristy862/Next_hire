@@ -2,7 +2,7 @@ dotenv.config();
 import dotenv from 'dotenv';
 
 import User from '../models/model.js';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken'; 
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -24,7 +24,7 @@ export const login = async (req, res) => {
     }
 
     // Check if the password matches
-    const isMatch = await bcrypt.compare(password, user.hashedPassword);
+    const isMatch = await bcryptjs.compare(password, user.hashedPassword);
 
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid password. Please try again.' });

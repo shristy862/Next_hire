@@ -2,7 +2,7 @@ import sns from '../../config/awsSNS.js';
 import TemporaryUser from '../models/temporaryModel.js';
 import generateOTP from '../../utils/otpGenerator.js';
 import User from '../models/model.js';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 
 export const signup = async (req, res) => {
   const { phoneNumber, role, password } = req.body;
@@ -36,7 +36,7 @@ export const signup = async (req, res) => {
 
   try {
     // Hash the password for storage
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcryptjs.hash(password, 10);
 
     // Send OTP using AWS SNS
     const params = {

@@ -1,7 +1,7 @@
 import sns from '../../config/awsSNS.js';
 import TemporaryUser from '../models/temporaryModel.js';
 import generateOTP from '../../utils/otpGenerator.js';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 
 export const resendOtp = async (req, res) => {
   const { phoneNumber, role, password } = req.body;
@@ -25,7 +25,7 @@ export const resendOtp = async (req, res) => {
 
     if (!tempUser) {
       // If user doesn't exist, create a new TemporaryUser entry
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = await bcryptjs.hash(password, 10);
       const otp = generateOTP();
 
       tempUser = new TemporaryUser({

@@ -1,6 +1,5 @@
 import TemporaryUser from '../models/temporaryModel.js';
 import User from '../models/model.js';
-import bcrypt from 'bcrypt';
 
 export const verify = async (req, res) => {
   const { phoneNumber, otp } = req.body;

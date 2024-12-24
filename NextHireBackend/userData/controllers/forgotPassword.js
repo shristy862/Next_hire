@@ -2,7 +2,7 @@ import sns from '../../config/awsSNS.js';
 import generateOTP from '../../utils/otpGenerator.js';
 import TemporaryUser from '../models/temporaryModel.js';
 import User from '../models/model.js'; 
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 
 // Send OTP for password reset
 export const sendForgotPasswordOTP = async (req, res) => {
@@ -54,7 +54,7 @@ export const resetPassword = async (req, res) => {
     }
 
     // Hash the new password before saving it
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcryptjs.hash(password, 10);
 
     // Save the hashed password to the User collection
     const updateResult = await User.updateOne(
