@@ -1,5 +1,5 @@
 import TemporaryUser from '../models/temporaryModel.js';
-import User from '../models/model.js';
+import User from '../models/user.js';
 
 export const verify = async (req, res) => {
   const { phoneNumber, otp } = req.body;
@@ -13,7 +13,7 @@ export const verify = async (req, res) => {
     const tempUser = await TemporaryUser.findOne({ phoneNumber });
 
     if (!tempUser) {
-      return res.status(400).json({ message: 'Temporary user not found. Please sign up first.' });
+      return res.status(400).json({ message: 'user not found. Please sign up first.' });
     }
 
     // Check if OTP is expired (5 minutes)

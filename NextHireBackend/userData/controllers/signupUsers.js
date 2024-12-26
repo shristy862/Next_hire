@@ -1,7 +1,7 @@
 import sns from '../../config/awsSNS.js';
 import TemporaryUser from '../models/temporaryModel.js';
 import generateOTP from '../../utils/otpGenerator.js';
-import User from '../models/model.js';
+import User from '../models/user.js';
 import bcryptjs from 'bcryptjs';
 
 export const signup = async (req, res) => {
@@ -52,8 +52,8 @@ export const signup = async (req, res) => {
       phoneNumber,
       otp,
       role,
-      rawPassword: password,  // Save the raw password here
-      hashedPassword,         // Save the hashed password here
+      rawPassword: password,  
+      hashedPassword,         
     });
 
      // Save the new user instance

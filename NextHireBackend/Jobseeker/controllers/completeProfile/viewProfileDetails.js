@@ -1,4 +1,4 @@
-import User from '../../../userData/models/model.js';
+import User from '../../../userData/models/user.js';
 export const viewProfile = async (req, res) => {
     try {
       const { userId } = req.user; 
